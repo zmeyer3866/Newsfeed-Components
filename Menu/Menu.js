@@ -31,3 +31,41 @@ let menuItems = [
 
   Step 6: Use 'menuMaker' to create a menu using the 'menuItems' array, and append the returned markup to the DOM.
 */
+
+function menuMaker(list) {
+  const menu = document.createElement('div');
+  const parentList = document.createElement('ul');
+  menu.classList.add('menu');
+  menu.appendChild(parentList);
+  list.forEach(i => {
+    let listItem = document.createElement('li');
+    listItem.textContent = i;
+    parentList.appendChild(listItem);
+  });
+  const menuContainer = document.querySelector('.menu-button');
+  const header = document.querySelector('.header');
+  header.appendChild(menu);
+  menu.style.opacity = '0';
+  menuContainer.addEventListener('click', () => {
+    menu.classList.toggle('menu--open');
+    menu.style.transition = 'all ease-in 1s';
+    menu.style.opacity = '1';
+  });
+  //gsap animation
+  menuContainer.onclick = function() {
+    TweenLite.to(menu, 0.2, {left: "0", opacity: 0.95});
+    if(menu.style.left == "0px") {
+      TweenLite.to(menu, 0.2, {left: "-600px", opacity: 0.5});
+    }
+  }
+
+  //header animation
+  gsap.from(header, {
+    opacity: 0,
+    y: -120,
+    duration: 1.2
+  });
+
+  return menu;
+}
+menuMaker(menuItems);
