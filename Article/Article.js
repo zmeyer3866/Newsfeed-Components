@@ -111,3 +111,61 @@ const data = [
 
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 */
+
+
+const articleMaker = (title, date, first, second, third) => {
+  const article = document.createElement('div');
+  const header = document.createElement('h2');
+  const dateArticle = document.createElement('p');
+  const firstParagraph = document.createElement('p');
+  const secondParagraph = document.createElement('p');
+  const thirdParagraph = document.createElement('p');
+  const expandButton = document.createElement('span');
+  article.appendChild(header);
+  article.appendChild(dateArticle);
+  article.appendChild(firstParagraph);
+  article.appendChild(secondParagraph);
+  article.appendChild(thirdParagraph);
+  article.appendChild(expandButton);
+  article.classList.add('article');
+  dateArticle.classList.add('date');
+  expandButton.classList.add('expandButton');
+  header.textContent = title;
+  dateArticle.textContent = date;
+  firstParagraph.textContent = first;
+  secondParagraph.textContent = second;
+  thirdParagraph.textContent = third;
+  const open = '\u25bc';
+  expandButton.textContent = open;
+  expandButton.addEventListener('click', () => {
+    if (expandButton.textContent == '\u25bc') {
+      expandButton.textContent = '\u25b2';
+
+    } else {
+      expandButton.textContent = '\u25bc';
+    }
+    article.classList.toggle('article-open');
+    expandButton.style.transition = '1s;';
+  });
+
+  //article animation
+  gsap.from(article, {
+    opacity: 0,
+    y: -200,
+    duration: 1.2
+  });
+
+  return article;
+};
+
+//displaying article content
+const articles = document.querySelector('.articles');
+data.forEach((item) => {
+  articles.appendChild(articleMaker(
+    item.title,
+    item.date,
+    item.firstParagraph,
+    item.secondParagraph,
+    item.thirdParagraph,
+  ));
+});
